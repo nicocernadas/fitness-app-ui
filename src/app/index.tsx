@@ -1,98 +1,108 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, Text, View } from "react-native";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function App() {
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+    <ScrollView
+      className="bg-white"
+      contentContainerClassName="items-center gap-1 py-4"
+    >
+      <View>
+        <Text>First Color Pallete</Text>
+        <Text className="text-xl font-bold text-first1">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-first2">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-first3">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-first4">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-first5">
+          Welcome to Nativewind!
+        </Text>
+      </View>
+
+      <View className="mt-2">
+        <Text>Second Color Pallete</Text>
+        <Text className="text-xl font-bold text-second1">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-second2">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-second3">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-second4">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-second5">
+          Welcome to Nativewind!
+        </Text>
+      </View>
+
+      <View className="mt-2">
+        <Text>Third Color Pallete</Text>
+        <Text className="text-xl font-bold text-third1">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-third2">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-third3">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-third4">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-third5">
+          Welcome to Nativewind!
+        </Text>
+      </View>
+
+      <View className="mt-2">
+        <Text>Fourth Color Pallete</Text>
+        <Text className="text-xl font-bold text-fourth1">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-fourth2">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-fourth3">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-fourth4">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-fourth5">
+          Welcome to Nativewind!
+        </Text>
+      </View>
+
+      <View className="mt-2">
+        <Text>Fifth Color Pallete</Text>
+        <Text className="text-xl font-bold text-fifth1">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-fifth2">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-fifth3">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-fifth4">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-fifth5">
+          Welcome to Nativewind!
+        </Text>
+        <Text className="text-xl font-bold text-fifth6">
+          Welcome to Nativewind!
+        </Text>
+      </View>
+    </ScrollView>
   );
 }
-
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
-});

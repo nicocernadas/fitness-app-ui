@@ -1,0 +1,42 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+@import "nativewind/theme";
+
+@theme {
+  --color-first1: #ffffff;
+  --color-first2: #f4f1ec;
+  --color-first3: #e8e2d8;
+  --color-first4: #dad3c6;
+  --color-first5: #cfc7b8;
+
+  --color-second1: #eaf2f8;
+  --color-second2: #c9dce8;
+  --color-second3: #8aa9c4;
+  --color-second4: #3e5c76;
+  --color-second5: #1d2d44;
+
+  --color-third1: #e0f4e7;
+  --color-third2: #ddf1e2;
+  --color-third3: #ceedd3;
+  --color-third4: #c2e6ca;
+  --color-third5: #b2ddc0;
+
+  --color-fourth1: #ffb700;
+  --color-fourth2: #ffd000;
+  --color-fourth3: #888888;
+  --color-fourth4: #494949;
+  --color-fourth5: #0e0e0e;
+
+  --color-fifth1: #0f2c33;
+  --color-fifth2: #21616a;
+  --color-fifth3: #2e9ca0;
+  --color-fifth4: #efa00f;
+  --color-fifth5: #533946;
+  --color-fifth6: #e6d1b4;
+}
+
+.class {
+  color: #494949;
+}
