@@ -38,6 +38,10 @@ yarn-error.*
 
 example
 .claude
+.prettierrc
+CLAUDE.md
+COLOR-PALLETES.txt
+
 
 # generated native folders
 /ios
