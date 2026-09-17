@@ -6,53 +6,12 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated"
 
+import { SCALE_EXTRA } from "@/constants/appConstants"
+import { statusColors } from "@/constants/statusColors"
 import { colors } from "@/constants/theme"
-
-type RangeProgressBarProps = {
-  /** Text shown above the numbers, e.g. "Calories" or "Protein" */
-  label: string
-  /** How much has been consumed so far */
-  current: number
-  /** Lower end of the target range */
-  min: number
-  /** Upper end of the target range */
-  max: number
-  /** Optional unit shown after the numbers, e.g. "kcal" or "g" */
-  unit?: string
-}
-
-// How far past `max` still counts as "a little over" (orange) before it turns red. 0.1 = 10%
-const OVER_TOLERANCE = 0.1
-
-// The full bar represents `max` plus this fraction, so there is room to show going over the range.
-// 0.2 = the bar ends at 120% of `max`
-const SCALE_EXTRA = 0.2
-
-export type RangeStatus = "under" | "onTarget" | "over" | "wayOver"
-
-export function getRangeStatus(
-  current: number,
-  min: number,
-  max: number,
-): RangeStatus {
-  if (current < min) return "under"
-  if (current <= max) return "onTarget"
-  if (current <= max * (1 + OVER_TOLERANCE)) return "over"
-  return "wayOver"
-}
-
-const statusColors: Record<RangeStatus, string> = {
-  under: colors.warning,
-  onTarget: colors.success,
-  over: colors.caution,
-  wayOver: colors.danger,
-}
-
-// Converts a value into a 0–100 position on the bar, never going outside the bar
-function toPercent(value: number, scaleMax: number) {
-  if (scaleMax <= 0) return 0
-  return Math.min(Math.max(value / scaleMax, 0), 1) * 100
-}
+import { RangeProgressBarProps } from "@/model/types/rangeProgProps"
+import { getRangeStatus } from "@/utils/getRangeStatus"
+import { toPercent } from "@/utils/toPercent"
 
 export default function RangeProgressBar({
   label,
@@ -94,10 +53,7 @@ export default function RangeProgressBar({
       <View className="mt-2 h-4 overflow-hidden rounded-full bg-border">
         {/* Fill: drawn first so the markers render on top of it */}
         <Animated.View
-          style={[
-            { height: "100%", backgroundColor: fillColor },
-            fillStyle,
-          ]}
+          style={[{ height: "100%", backgroundColor: fillColor }, fillStyle]}
         />
 
         {/* Markers: thin lines at the start and end of the target range.
@@ -110,7 +66,7 @@ export default function RangeProgressBar({
             width: 2,
             marginLeft: -1,
             left: `${minPercent}%`,
-            backgroundColor: colors.fontPrimary,
+            backgroundColor: colors.gray,
           }}
         />
         <View
@@ -121,7 +77,7 @@ export default function RangeProgressBar({
             width: 2,
             marginLeft: -1,
             left: `${maxPercent}%`,
-            backgroundColor: colors.fontPrimary,
+            backgroundColor: colors.gray,
           }}
         />
       </View>

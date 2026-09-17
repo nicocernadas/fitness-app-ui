@@ -19,6 +19,9 @@ PASTEL AQUA GREEN (maybe mix with light grays)
 .color4{color:#C2E6CA;}
 .color5{color:#B2DDC0;}
 
+Resume this session with:
+claude --resume 75a388bf-cae7-4eb9-972e-1a7ce32e1ca6
+
 ANNOTATIONS
 Weight: 72kg
 Height: 168cm
