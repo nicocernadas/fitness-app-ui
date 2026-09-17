@@ -61,6 +61,12 @@
   --color-accent: #21616a;
   --color-border: rgba(0, 0, 0, 0.1);
 
+  /* Status colors (progress bars) */
+  --color-warning: #ffb700;
+  --color-success: #3fa66b;
+  --color-caution: #f28c28;
+  --color-danger: #d64545;
+
   --spacing-0: 0px;
   --spacing-1: 4px;
   --spacing-2: 8px;

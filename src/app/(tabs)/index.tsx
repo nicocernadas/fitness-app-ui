@@ -1,12 +1,16 @@
 import "@/global.css"
+import RangeProgressBar from "@/components/RangeProgressBar"
 import { styled } from "nativewind"
-import { Text, View } from "react-native"
+import { useState } from "react"
+import { Pressable, Text, View } from "react-native"
 import { Calendar } from "react-native-calendars"
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context"
 
 const SafeAreaView = styled(RNSafeAreaView)
 
 export default function App() {
+  const [calories, setCalories] = useState(0)
+
   return (
     <SafeAreaView className="flex-1 bg-background p-5 ">
       <Text className="font-sans-bold text-4xl text-font-secondary">
@@ -40,9 +44,22 @@ export default function App() {
         />
 
         <View className="mt-5">
-          <Text className="light-text">Calories</Text>
-          <View className="border rounded-2xl h-10 mt-1">
-            <View></View>
+          <RangeProgressBar
+            label="Calories"
+            current={calories}
+            min={2000}
+            max={2300}
+            unit="kcal"
+          />
+
+          {/* TEMPORARY: test buttons until adding meals exists */}
+          <View className="mt-3 flex-row gap-3">
+            <Pressable onPress={() => setCalories((prev) => prev + 300)}>
+              <Text className="light-text">+300 kcal</Text>
+            </Pressable>
+            <Pressable onPress={() => setCalories(0)}>
+              <Text className="light-text">Reset</Text>
+            </Pressable>
           </View>
         </View>
       </View>

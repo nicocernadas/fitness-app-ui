@@ -6,6 +6,12 @@ export const colors = {
   fontTerciary: "#33494e",
   accent: "#21616a",
   border: "rgba(0, 0, 0, 0.1)",
+
+  // Status colors (progress bars)
+  warning: "#ffb700",
+  success: "#3fa66b",
+  caution: "#f28c28",
+  danger: "#d64545",
 } as const
 
 export const spacing = {

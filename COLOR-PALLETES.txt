@@ -18,3 +18,64 @@ PASTEL AQUA GREEN (maybe mix with light grays)
 .color3{color:#CEEDD3;}
 .color4{color:#C2E6CA;}
 .color5{color:#B2DDC0;}
+
+ANNOTATIONS
+Weight: 72kg
+Height: 168cm
+Age: 25
+Gender: Male
+Activity level: moderate
+
+TMB:
+Hombres: (10 × peso kg) + (6.25 × altura cm) - (5 × edad) + 5
+Mujeres: (10 × peso kg) + (6.25 × altura cm) - (5 × edad) - 161
+
+TDEE:
+(0 o 1) sedentario: TMB * 1.2
+(1 a 3) ligero: TMB * 1.375
+(3 a 5) moderado: TMB * 1.55
+(6 a 7) intenso: TMB * 1.725
+
+ENTRENAMIENTOS:
+
+Ganar musculo lento:
+Calorías: TDEE + 150 kcal
+Proteínas: 1.8 g × peso kg
+Grasas: (Calorías Totales × 0.25) ÷ 9
+Carbohidratos: (Calorías Totales - (Gramos Proteína × 4) - (Gramos Grasa × 9)) ÷ 4
+
+Ganar musculo moderado:
+Calorías: TDEE + 300 kcal
+Proteínas: 2.0 g × peso kg
+Grasas: (Calorías Totales × 0.25) ÷ 9
+Carbohidratos: (Calorías Totales - (Gramos Proteína × 4) - (Gramos Grasa × 9)) ÷ 4
+
+Ganar musculo rapido:
+Calorías: TDEE + 500 kcal
+Proteínas: 2.2 g × peso kg
+Grasas: (Calorías Totales × 0.25) ÷ 9
+Carbohidratos: (Calorías Totales - (Gramos Proteína × 4) - (Gramos Grasa × 9)) ÷ 4
+
+Perder grasa lento:
+Calorías: TDEE - 250 kcal
+Proteínas: 2.0 g × peso kg
+Grasas: (Calorías Totales × 0.25) ÷ 9
+Carbohidratos: (Calorías Totales - (Gramos Proteína × 4) - (Gramos Grasa × 9)) ÷ 4
+
+Perder grasa moderado:
+Calorías: TDEE - 500 kcal
+Proteínas: 2.2 g × peso kg
+Grasas: (Calorías Totales × 0.25) ÷ 9
+Carbohidratos: (Calorías Totales - (Gramos Proteína × 4) - (Gramos Grasa × 9)) ÷ 4
+
+Perder grasa rapido:
+Calorías: TDEE - 750 kcal
+Proteínas: 2.4 g × peso kg
+Grasas: (Calorías Totales × 0.25) ÷ 9
+Carbohidratos: (Calorías Totales - (Gramos Proteína × 4) - (Gramos Grasa × 9)) ÷ 4
+
+Mantener mi peso:
+Calorías: TDEE
+Proteínas: 1.8 g × peso kg
+Grasas: (Calorías Totales × 0.25) ÷ 9
+Carbohidratos: (Calorías Totales - (Gramos Proteína × 4) - (Gramos Grasa × 9)) ÷ 4
