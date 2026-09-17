@@ -37,19 +37,29 @@
 --color-fifth6: #e6d1b4;
 */
 
+.class {
+  color: #0f2c33;
+}
+
+.class {
+  color: #1b3136;
+}
+
+.class {
+  color: rgba(250, 240, 230, 0.329);
+}
+
 @theme {
   /* Remember to keep this up-to-date with var(colors) in @theme.ts */
-  --color-background: #0001;
-  --color-foreground: #081126;
-  --color-card: #fff8e7;
-  --color-muted: #f6eecf;
-  --color-muted-foreground: rgba(0, 0, 0, 0.6);
-  --color-primary: #0f2c33;
+  --color-background: rgba(250, 240, 230, 0.329);
+  /* --color-background-card: #; */
+
+  --color-font-primary: #0f2c33;
+  --color-font-secondary: #1b3136;
+  --color-font-terciary: #33494e;
+
   --color-accent: #21616a;
   --color-border: rgba(0, 0, 0, 0.1);
-  --color-success: #16a34a;
-  --color-destructive: #dc2626;
-  --color-subscription: #8fd1bd;
 
   --spacing-0: 0px;
   --spacing-1: 4px;
@@ -73,6 +83,7 @@
 
   /* Text body */
   --font-sans: sans-regular;
+  /* Little texts */
   --font-sans-light: sans-light;
   --font-sans-medium: sans-medium;
   --font-sans-semibold: sans-semibold;
@@ -83,6 +94,14 @@
 }
 
 @layer components {
+  .light-text {
+    @apply font-sans-light text-font-terciary;
+  }
+
+  .extra-light-text {
+    @apply font-sans-light text-[#979797];
+  }
+
   .tabs-icon {
     @apply size-12 items-center justify-center;
   }
@@ -112,7 +131,7 @@
   }
 
   .home-user-name {
-    @apply ml-4 text-2xl font-sans-bold text-primary;
+    @apply ml-4 text-2xl font-sans-bold text-font-primary;
   }
 
   .home-add-icon {
@@ -144,7 +163,7 @@
   }
 
   .list-title {
-    @apply text-2xl font-sans-bold text-primary;
+    @apply text-2xl font-sans-bold text-font-primary;
   }
 
   .list-action {
@@ -152,7 +171,7 @@
   }
 
   .list-action-text {
-    @apply text-lg font-sans-semibold text-primary;
+    @apply text-lg font-sans-semibold text-font-primary;
   }
 
   .upcoming-card {
@@ -168,23 +187,15 @@
   }
 
   .upcoming-price {
-    @apply text-lg font-sans-bold text-primary;
-  }
-
-  .upcoming-meta {
-    @apply text-sm font-sans-semibold text-muted-foreground;
+    @apply text-lg font-sans-bold text-font-primary;
   }
 
   .upcoming-name {
-    @apply mt-2 text-lg font-sans-bold text-primary;
+    @apply mt-2 text-lg font-sans-bold text-font-primary;
   }
 
   .sub-card {
     @apply rounded-2xl border border-border p-4;
-  }
-
-  .sub-card-expanded {
-    @apply bg-subscription;
   }
 
   .sub-head {
@@ -204,31 +215,15 @@
   }
 
   .sub-title {
-    @apply mb-1 text-lg font-sans-bold text-primary;
-  }
-
-  .sub-meta {
-    @apply text-sm font-sans-semibold text-muted-foreground;
-  }
-
-  .sub-price-box {
-    @apply ml-3 shrink-0 items-end;
+    @apply mb-1 text-lg font-sans-bold text-font-primary;
   }
 
   .sub-price {
-    @apply mb-1 text-lg font-sans-bold text-primary;
-  }
-
-  .sub-billing {
-    @apply text-sm font-sans-medium text-muted-foreground;
+    @apply mb-1 text-lg font-sans-bold text-font-primary;
   }
 
   .sub-body {
     @apply mt-6 gap-4;
-  }
-
-  .sub-details {
-    @apply gap-6;
   }
 
   .sub-row {
@@ -239,20 +234,12 @@
     @apply min-w-0 flex-1 flex-row items-center gap-2;
   }
 
-  .sub-label {
-    @apply shrink-0 text-base font-sans-medium text-muted-foreground;
-  }
-
   .sub-value {
-    @apply flex-1 font-sans-bold text-primary;
+    @apply flex-1 font-sans-bold text-font-primary;
   }
 
   .sub-cancel {
-    @apply mt-2 items-center rounded-full bg-primary py-4;
-  }
-
-  .sub-cancel-disabled {
-    @apply bg-primary/35;
+    @apply mt-2 items-center rounded-full bg-font-primary py-4;
   }
 
   .sub-cancel-text {
@@ -296,27 +283,11 @@
   }
 
   .auth-wordmark {
-    @apply text-3xl font-sans-extrabold text-primary;
-  }
-
-  .auth-wordmark-sub {
-    @apply -mt-1 text-xs font-sans-semibold uppercase tracking-[1px] text-muted-foreground;
+    @apply text-3xl font-sans-extrabold text-font-primary;
   }
 
   .auth-title {
-    @apply text-3xl font-sans-bold text-primary;
-  }
-
-  .auth-subtitle {
-    @apply mt-2 max-w-[320px] text-center text-base font-sans-medium text-muted-foreground;
-  }
-
-  .auth-card {
-    @apply mt-8 rounded-3xl border border-border bg-card p-5;
-  }
-
-  .auth-form {
-    @apply gap-4;
+    @apply text-3xl font-sans-bold text-font-primary;
   }
 
   .auth-field {
@@ -324,23 +295,7 @@
   }
 
   .auth-label {
-    @apply text-sm font-sans-semibold text-primary;
-  }
-
-  .auth-input {
-    @apply rounded-2xl border border-border bg-background px-4 py-4 text-base font-sans-medium text-primary;
-  }
-
-  .auth-input-error {
-    @apply border-destructive;
-  }
-
-  .auth-error {
-    @apply text-xs font-sans-medium text-destructive;
-  }
-
-  .auth-helper {
-    @apply text-sm font-sans-medium text-muted-foreground;
+    @apply text-sm font-sans-semibold text-font-primary;
   }
 
   .auth-button {
@@ -352,7 +307,7 @@
   }
 
   .auth-button-text {
-    @apply text-base font-sans-bold text-primary;
+    @apply text-base font-sans-bold text-font-primary;
   }
 
   .auth-secondary-button {
@@ -363,24 +318,12 @@
     @apply text-sm font-sans-semibold text-accent;
   }
 
-  .auth-divider-row {
-    @apply my-4 flex-row items-center gap-3;
-  }
-
   .auth-divider-line {
     @apply h-px flex-1 bg-border;
   }
 
-  .auth-divider-text {
-    @apply text-[11px] font-sans-semibold uppercase tracking-[1px] text-muted-foreground;
-  }
-
   .auth-link-row {
     @apply mt-5 flex-row items-center justify-center gap-1;
-  }
-
-  .auth-link-copy {
-    @apply text-sm font-sans-medium text-muted-foreground;
   }
 
   .auth-link {
@@ -399,20 +342,8 @@
     @apply flex-row items-center justify-between border-b border-border px-5 py-4;
   }
 
-  .modal-title {
-    @apply text-xl font-sans-bold text-primary;
-  }
-
-  .modal-close {
-    @apply size-8 items-center justify-center rounded-full bg-muted;
-  }
-
   .modal-close-text {
-    @apply text-lg font-sans-bold text-primary;
-  }
-
-  .modal-body {
-    @apply gap-5 p-5;
+    @apply text-lg font-sans-bold text-font-primary;
   }
 
   .picker-row {
@@ -425,10 +356,6 @@
 
   .picker-option-active {
     @apply border-accent bg-accent/10;
-  }
-
-  .picker-option-text {
-    @apply text-sm font-sans-semibold text-muted-foreground;
   }
 
   .picker-option-text-active {
@@ -445,10 +372,6 @@
 
   .category-chip-active {
     @apply border-accent bg-accent/10;
-  }
-
-  .category-chip-text {
-    @apply text-sm font-sans-semibold text-muted-foreground;
   }
 
   .category-chip-text-active {
