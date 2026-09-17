@@ -19,7 +19,7 @@ export default function App() {
   const [fats, setFats] = useState(0)
   const insets = useSafeAreaInsets()
   const tabBar = components.tabBar
-  const bottomPad = tabBar.height + tabBar.horizontalInset + insets.bottom + 16
+  const bottomPad = tabBar.height + tabBar.horizontalInset + insets.bottom
 
   return (
     <SafeAreaView className="flex-1 bg-background p-5 ">

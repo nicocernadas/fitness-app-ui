@@ -40,8 +40,7 @@ example
 .claude
 .prettierrc
 CLAUDE.md
-COLOR-PALLETES.txt
-
+annotations.txt
 
 # generated native folders
 /ios
