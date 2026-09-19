@@ -41,6 +41,8 @@ example
 .prettierrc
 CLAUDE.md
 annotations.txt
+notes.ts
+.vscode/
 
 # generated native folders
 /ios

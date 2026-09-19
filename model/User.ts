@@ -4,6 +4,7 @@ import { NeatLevel } from "./enums/neatLevel"
 
 export class User {
   public name: string
+  public age: number
   public gender: Gender
   public weight: number
   public height_cms: number
@@ -12,6 +13,7 @@ export class User {
 
   constructor(
     name: string,
+    age: number,
     gender: Gender,
     weight: number,
     height_cms: number,
@@ -19,6 +21,7 @@ export class User {
     daily_life_activity: NeatLevel,
   ) {
     this.name = name
+    this.age = age
     this.gender = gender
     this.weight = weight
     this.height_cms = height_cms

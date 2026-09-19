@@ -1,30 +1,16 @@
+import { Goal } from "./types/Goal"
+import { Pace } from "./types/Pace"
 import { User } from "./User"
 
+//@ A user has 1 plan - which calculates all of the statistics
 class Plan {
   private user: User
-  public calories: number = 0
-  public proteins: number = 0
-  public carbs: number = 0
-  public fats: number = 0
+  private goal: Goal
+  private pace: Pace
 
-  constructor(user: User) {
+  constructor(user: User, goal: Goal, pace: Pace) {
     this.user = user
-  }
-
-  // TODO: implement
-  public calculateCalories(): number {
-    return 1
-  }
-
-  public calculateProteins(): number {
-    return 1
-  }
-
-  public calculateCarbs(): number {
-    return 1
-  }
-
-  public calculateFats(): number {
-    return 1
+    this.goal = goal
+    this.pace = pace
   }
 }
