@@ -1,25 +1,28 @@
 import { ActivityLevel } from "./enums/activityLevel"
 import { Gender } from "./enums/gender"
-import { NeatLevel } from "./enums/neatLevel"
+import { Neat } from "./enums/neatLevel"
 
 export class User {
+  private id: number
   public name: string
   public age: number
   public gender: Gender
   public weight: number
   public height_cms: number
   public activity_level: ActivityLevel
-  public daily_life_activity: NeatLevel
+  public daily_life_activity: Neat
 
   constructor(
+    id: number,
     name: string,
     age: number,
     gender: Gender,
     weight: number,
     height_cms: number,
     activity_level: ActivityLevel,
-    daily_life_activity: NeatLevel,
+    daily_life_activity: Neat,
   ) {
+    this.id = id
     this.name = name
     this.age = age
     this.gender = gender
