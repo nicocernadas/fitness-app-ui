@@ -1,9 +1,21 @@
+import { SessionProvider, useSession } from "@/context/session-provider"
 import "@/global.css"
 import { useFonts } from "expo-font"
 import { SplashScreen, Stack } from "expo-router"
 import { useEffect } from "react"
 
-export default function RootLayout() {
+SplashScreen.preventAutoHideAsync()
+
+export default function RootLayour() {
+  return (
+    <SessionProvider>
+      <RootNavigator />
+    </SessionProvider>
+  )
+}
+
+function RootNavigator() {
+  const { token, isProfileComplete, isLoading } = useSession()
   const [fontsLoaded] = useFonts({
     "sans-regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
     "sans-bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
@@ -13,13 +25,29 @@ export default function RootLayout() {
     "sans-light": require("../../assets/fonts/PlusJakartaSans-Light.ttf"),
   })
 
+  const isReady = fontsLoaded && !isLoading
+
   useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync()
-    }
-  }, [fontsLoaded])
+    if (isReady) SplashScreen.hideAsync()
+  }, [isReady])
 
-  if (!fontsLoaded) return null
+  if (!isReady) return null
 
-  return <Stack screenOptions={{ headerShown: false }} />
+  const isSignedIn = !!token
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={!isSignedIn}>
+        <Stack.Screen name="(auth)" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={isSignedIn && !isProfileComplete}>
+        <Stack.Screen name="(onboarding)" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={isSignedIn && isProfileComplete}>
+        <Stack.Screen name="(tabs)" />
+      </Stack.Protected>
+    </Stack>
+  )
 }

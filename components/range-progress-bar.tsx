@@ -6,12 +6,12 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated"
 
-import { SCALE_EXTRA } from "@/constants/appConstants"
-import { statusColors } from "@/constants/statusColors"
+import { SCALE_EXTRA } from "@/constants/app-constants"
+import { statusColors } from "@/constants/status-colors"
 import { colors } from "@/constants/theme"
-import { RangeProgressBarProps } from "@/model/types/rangeProgProps"
-import { getRangeStatus } from "@/utils/getRangeStatus"
-import { toPercent } from "@/utils/toPercent"
+import { RangeProgressBarProps } from "@/model/types/RangeProgProps"
+import { getRangeStatus } from "@/utils/get-range-status"
+import { toPercent } from "@/utils/to-percent"
 
 export default function RangeProgressBar({
   label,

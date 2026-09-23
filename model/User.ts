@@ -1,6 +1,6 @@
 import { ActivityLevel } from "./enums/activityLevel"
-import { Gender } from "./enums/gender"
-import { Neat } from "./enums/neatLevel"
+import { Gender } from "./enums/Gender"
+import { Neat } from "./enums/NeatLevel"
 
 export class User {
   private id: number

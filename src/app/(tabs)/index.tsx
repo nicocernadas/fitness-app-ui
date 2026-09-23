@@ -1,4 +1,4 @@
-import RangeProgressBar from "@/components/RangeProgressBar"
+import RangeProgressBar from "@/components/range-progress-bar"
 import { components } from "@/constants/theme"
 import "@/global.css"
 import { styled } from "nativewind"
