@@ -10,9 +10,9 @@ export type AuthResponse = {
 
 export type SessionContextValue = {
   token: string | null
-  isProfileComplete: boolean
+  user: CurrentUser | null
   isLoading: boolean
-  signIn: (token: string, isProfileComplete: boolean) => Promise<void>
+  signIn: (token: string, user: CurrentUser) => Promise<void>
   signOut: () => Promise<void>
-  markProfileComplete: () => void
+  updateUser: (user: CurrentUser) => void
 }

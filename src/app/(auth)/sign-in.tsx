@@ -1,11 +1,12 @@
 import { FormInput } from "@/components/form-input"
 import { PrimaryButton } from "@/components/primary-button"
+import { ScreenContainer } from "@/components/screen-container"
 import { useSession } from "@/context/session-provider"
 import { authService } from "@/services/auth-service"
 import { getErrorMessage } from "@/utils/get-error-message"
 import { router } from "expo-router"
 import { useState } from "react"
-import { Pressable, Text, View } from "react-native"
+import { Pressable, Text } from "react-native"
 
 export default function SignInScreen() {
   const { signIn } = useSession()
@@ -19,7 +20,7 @@ export default function SignInScreen() {
     setIsSubmitting(true)
     try {
       const { token, user } = await authService.login(email, password)
-      await signIn(token, user.isProfileComplete)
+      await signIn(token, user)
     } catch (error) {
       setErrorMessage(getErrorMessage(error))
     } finally {
@@ -28,7 +29,7 @@ export default function SignInScreen() {
   }
 
   return (
-    <View className="flex-1 justify-center gap-4 bg-white px-6">
+    <ScreenContainer contentClassName="justify-center gap-4">
       <Text className="text-3xl font-bold">Sign In</Text>
 
       <FormInput
@@ -57,6 +58,6 @@ export default function SignInScreen() {
       <Pressable onPress={() => router.push("/sign-up")}>
         <Text className="text-center">Don't have an account? Sign Up!</Text>
       </Pressable>
-    </View>
+    </ScreenContainer>
   )
 }

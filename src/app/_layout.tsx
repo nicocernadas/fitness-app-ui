@@ -15,7 +15,7 @@ export default function RootLayour() {
 }
 
 function RootNavigator() {
-  const { token, isProfileComplete, isLoading } = useSession()
+  const { token, user, isLoading } = useSession()
   const [fontsLoaded] = useFonts({
     "sans-regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
     "sans-bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
@@ -41,11 +41,11 @@ function RootNavigator() {
         <Stack.Screen name="(auth)" />
       </Stack.Protected>
 
-      <Stack.Protected guard={isSignedIn && !isProfileComplete}>
+      <Stack.Protected guard={isSignedIn && !user?.isProfileComplete}>
         <Stack.Screen name="(onboarding)" />
       </Stack.Protected>
 
-      <Stack.Protected guard={isSignedIn && isProfileComplete}>
+      <Stack.Protected guard={isSignedIn && (user?.isProfileComplete ?? false)}>
         <Stack.Screen name="(tabs)" />
       </Stack.Protected>
     </Stack>

@@ -1,4 +1,4 @@
-import type { SessionContextValue } from "@/hooks/types/Session"
+import type { CurrentUser, SessionContextValue } from "@/hooks/types/Session"
 import { ApiError } from "@/services/errors/ApiError"
 import { tokenStorage } from "@/services/helpers/token-storage"
 import { userService } from "@/services/user-service"
@@ -22,7 +22,7 @@ export function useSession() {
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const [token, setToken] = useState<string | null>(null)
-  const [isProfileComplete, setIsProfileComplete] = useState<boolean>(false)
+  const [user, setUser] = useState<CurrentUser | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
 
       const user = await userService.fetchCurrentUser(storedToken)
       setToken(storedToken)
-      setIsProfileComplete(user.isProfileComplete)
+      setUser(user)
     } catch (error) {
       if (error instanceof ApiError && error.status === 401)
         await tokenStorage.clear()
@@ -45,31 +45,31 @@ export function SessionProvider({ children }: PropsWithChildren) {
     }
   }
 
-  async function signIn(newToken: string, profileComplete: boolean) {
+  async function signIn(newToken: string, user: CurrentUser) {
     await tokenStorage.save(newToken)
     setToken(newToken)
-    setIsProfileComplete(profileComplete)
+    setUser(user)
   }
 
   async function signOut() {
     await tokenStorage.clear()
     setToken(null)
-    setIsProfileComplete(false)
+    setUser(null)
   }
 
-  function markProfileComplete() {
-    setIsProfileComplete(true)
+  function updateUser(user: CurrentUser | null) {
+    setUser(user)
   }
 
   return (
     <SessionContext
       value={{
         token,
-        isProfileComplete,
+        user,
         isLoading,
         signIn,
         signOut,
-        markProfileComplete,
+        updateUser,
       }}
     >
       {children}

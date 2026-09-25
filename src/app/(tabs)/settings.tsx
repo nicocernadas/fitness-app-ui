@@ -1,14 +1,11 @@
-import { styled } from "nativewind"
+import { ScreenContainer } from "@/components/screen-container"
 import { Text } from "react-native"
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context"
-
-const SafeAreaView = styled(RNSafeAreaView)
 
 const Settings = () => {
   return (
-    <SafeAreaView className="flex-1 bg-background p-5">
+    <ScreenContainer hasTabBar>
       <Text className="font-sans-light">This will be the Settings tab</Text>
-    </SafeAreaView>
+    </ScreenContainer>
   )
 }
 
