@@ -2,6 +2,7 @@ import { FormInput } from "@/components/form-input"
 import { PrimaryButton } from "@/components/primary-button"
 import { useSession } from "@/context/session-provider"
 import { authService } from "@/services/auth-service"
+import { getErrorMessage } from "@/utils/get-error-message"
 import { router } from "expo-router"
 import { useState } from "react"
 import { Pressable, Text, View } from "react-native"
@@ -19,8 +20,8 @@ export default function SignUpScreen() {
     try {
       const { token } = await authService.register(email, password)
       await signIn(token, false)
-    } catch {
-      setErrorMessage("Couldn't create your account. Try again")
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error))
     } finally {
       setIsSubmitting(false)
     }

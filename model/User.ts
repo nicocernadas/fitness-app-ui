@@ -1,4 +1,4 @@
-import { ActivityLevel } from "./enums/activityLevel"
+import { ActivityLevel } from "./enums/ActivityLevel"
 import { Gender } from "./enums/Gender"
 import { Neat } from "./enums/NeatLevel"
 

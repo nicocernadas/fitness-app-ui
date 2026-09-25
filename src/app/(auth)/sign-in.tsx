@@ -2,6 +2,7 @@ import { FormInput } from "@/components/form-input"
 import { PrimaryButton } from "@/components/primary-button"
 import { useSession } from "@/context/session-provider"
 import { authService } from "@/services/auth-service"
+import { getErrorMessage } from "@/utils/get-error-message"
 import { router } from "expo-router"
 import { useState } from "react"
 import { Pressable, Text, View } from "react-native"
@@ -19,8 +20,8 @@ export default function SignInScreen() {
     try {
       const { token, user } = await authService.login(email, password)
       await signIn(token, user.isProfileComplete)
-    } catch {
-      setErrorMessage("Couldn't sign in. Check your email and password")
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error))
     } finally {
       setIsSubmitting(false)
     }

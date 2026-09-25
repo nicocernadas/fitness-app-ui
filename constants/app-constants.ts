@@ -7,3 +7,7 @@ export const MEN_CALORIC_FLOOR = 1500
 export const WOMEN_CALORIC_FLOOR = 1200
 export const API_PORT = 3000
 export const API_URL = `http://192.168.1.25:${API_PORT}`
+export const ERROR_MESSAGES = {
+  network: "Couldn't reach the server. Check your connection and try again",
+  unexpected: "Something went wrong. Please try again later",
+}

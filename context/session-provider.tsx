@@ -1,4 +1,5 @@
-import type { SessionContextValue } from "@/hooks/types/session"
+import type { SessionContextValue } from "@/hooks/types/Session"
+import { ApiError } from "@/services/errors/ApiError"
 import { tokenStorage } from "@/services/helpers/token-storage"
 import { userService } from "@/services/user-service"
 import {
@@ -36,8 +37,9 @@ export function SessionProvider({ children }: PropsWithChildren) {
       const user = await userService.fetchCurrentUser(storedToken)
       setToken(storedToken)
       setIsProfileComplete(user.isProfileComplete)
-    } catch {
-      await tokenStorage.clear()
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 401)
+        await tokenStorage.clear()
     } finally {
       setIsLoading(false)
     }
