@@ -1,5 +1,6 @@
+// Values must match the backend's Goal enum
 export enum Goal {
-  MUSCLE,
-  LOSE_WEIGHT,
-  STAY,
+  BUILD_MUSCLE = "Build muscle",
+  LOSE_FAT = "Lose fat",
+  MAINTAIN = "Maintain weight",
 }

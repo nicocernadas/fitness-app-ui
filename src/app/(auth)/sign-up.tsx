@@ -2,8 +2,9 @@ import { FormInput } from "@/components/form-input"
 import { PrimaryButton } from "@/components/primary-button"
 import { ScreenContainer } from "@/components/screen-container"
 import { useSession } from "@/context/session-provider"
+import { useFormSubmit } from "@/hooks/use-form-submit"
+import { Credentials } from "@/model/Credentials"
 import { authService } from "@/services/auth-service"
-import { getErrorMessage } from "@/utils/get-error-message"
 import { router } from "expo-router"
 import { useState } from "react"
 import { Pressable, Text } from "react-native"
@@ -12,25 +13,21 @@ export default function SignUpScreen() {
   const { signIn } = useSession()
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  const {
+    submit: handleSignUp,
+    errorMessage,
+    isSubmitting,
+  } = useFormSubmit(async () => {
+    const credentials = new Credentials(email, password)
+    credentials.validate()
 
-  async function handleSignUp() {
-    setErrorMessage(null)
-    setIsSubmitting(true)
-    try {
-      const { token, user } = await authService.register(email, password)
-      await signIn(token, user)
-    } catch (error) {
-      setErrorMessage(getErrorMessage(error))
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+    const { token, user } = await authService.register(credentials)
+    await signIn(token, user)
+  })
 
   return (
     <ScreenContainer contentClassName="justify-center gap-4">
-      <Text className="text-3xl font-bold">Create account</Text>
+      <Text className="text-3xl font-bold text-font-primary">Create account</Text>
 
       <FormInput
         placeholder="Email"
@@ -60,7 +57,7 @@ export default function SignUpScreen() {
       />
 
       <Pressable onPress={() => router.back()}>
-        <Text className="text-center">Already have an account? Sign In</Text>
+        <Text className="text-center text-font-primary">Already have an account? Sign In</Text>
       </Pressable>
     </ScreenContainer>
   )

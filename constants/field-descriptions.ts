@@ -1,5 +1,8 @@
 import { ActivityLevel } from "@/model/enums/ActivityLevel"
 import { Neat } from "@/model/enums/NeatLevel"
+import { Goal } from "@/model/types/Goal"
+import { Pace } from "@/model/types/Pace"
+import type { PacedGoal } from "@/model/types/PlanSelection"
 
 // Texts shown under the onboarding dropdowns. Values match the ranges in annotations.txt
 
@@ -21,4 +24,25 @@ export const ACTIVITY_LEVEL_OPTION_DESCRIPTIONS: Record<ActivityLevel, string> =
   [ActivityLevel.LIGHT]: "1 to 3 days a week",
   [ActivityLevel.MODERATE]: "3 to 5 days a week",
   [ActivityLevel.INTENSE]: "6 to 7 days a week",
+}
+
+export const GOAL_OPTION_DESCRIPTIONS: Record<Goal, string> = {
+  [Goal.BUILD_MUSCLE]: "Eat a bit above your maintenance calories, with plenty of protein",
+  [Goal.LOSE_FAT]: "Eat below your maintenance calories, keeping protein high to hold on to muscle",
+  [Goal.MAINTAIN]: "Eat at your maintenance calories to keep your current weight",
+}
+
+export const PACE_DESCRIPTION = "How fast you want to get there."
+
+export const PACE_OPTION_DESCRIPTIONS: Record<PacedGoal, Record<Pace, string>> = {
+  [Goal.BUILD_MUSCLE]: {
+    [Pace.GRADUAL]: "Slow, lean gains with the least fat on the way",
+    [Pace.STEADY]: "A balance between gaining fast and staying lean",
+    [Pace.FAST]: "The quickest gains, with some extra fat",
+  },
+  [Goal.LOSE_FAT]: {
+    [Pace.GRADUAL]: "The easiest to stick to, and keeps the most muscle",
+    [Pace.STEADY]: "Steady weekly progress",
+    [Pace.FAST]: "The quickest results, but harder to sustain",
+  },
 }

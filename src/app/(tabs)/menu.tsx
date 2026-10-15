@@ -4,7 +4,7 @@ import { Text } from "react-native"
 const UserMenu = () => {
   return (
     <ScreenContainer hasTabBar>
-      <Text className="font-sans-light">
+      <Text className="font-sans-light text-font-primary">
         This is where the user can create her/his own courses
       </Text>
     </ScreenContainer>

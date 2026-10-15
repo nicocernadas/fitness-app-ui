@@ -9,14 +9,17 @@ import {
   NEAT_OPTION_DESCRIPTIONS,
 } from "@/constants/field-descriptions"
 import { useSession } from "@/context/session-provider"
+import { useFormSubmit } from "@/hooks/use-form-submit"
 import { ActivityLevel } from "@/model/enums/ActivityLevel"
 import { Gender } from "@/model/enums/Gender"
 import { Neat } from "@/model/enums/NeatLevel"
+import { Profile } from "@/model/Profile"
+import { userService } from "@/services/user-service"
 import { useState } from "react"
 import { Text } from "react-native"
 
 export default function PersonalInfoScreen() {
-  const { updateUser } = useSession()
+  const { token, updateUser } = useSession()
   const [gender, setGender] = useState<Gender>(Gender.FEMALE)
   const [neat, setNeat] = useState<Neat>(Neat.LOW)
   const [activityLevel, setActivityLevel] = useState<ActivityLevel>(
@@ -27,11 +30,30 @@ export default function PersonalInfoScreen() {
   const [height, setHeight] = useState<string>("")
   const [age, setAge] = useState<string>("")
 
-  const handleSubmit = () => {}
+  const { submit, errorMessage, isSubmitting } = useFormSubmit(async () => {
+    // The onboarding guard only lets signed-in users here, so token is always set
+    if (!token) return
+
+    // Number("") is 0, so an empty field fails validate() with a clear message
+    const profile = new Profile({
+      name,
+      age: Number(age),
+      gender,
+      weight: Number(weight),
+      height_cms: Number(height),
+      activity_level: activityLevel,
+      daily_life_activity: neat,
+    })
+    profile.validate()
+
+    const user = await userService.completeOnboarding(token, profile)
+    // isProfileComplete is now true, so the onboarding guard moves us to goal
+    updateUser(user)
+  })
 
   return (
     <ScreenContainer contentClassName="justify-center gap-4">
-      <Text className="text-2xl font-bold">Personal Info</Text>
+      <Text className="text-2xl font-bold text-font-primary">Personal Info</Text>
       <Text className="light-text">
         We need some details to calculate your plan accordingly
       </Text>
@@ -92,7 +114,10 @@ export default function PersonalInfoScreen() {
         description={ACTIVITY_LEVEL_DESCRIPTION}
         optionDescriptions={ACTIVITY_LEVEL_OPTION_DESCRIPTIONS}
       />
-      <PrimaryButton title="Submit" onPress={handleSubmit} />
+
+      {errorMessage && <Text className="text-red-600">{errorMessage}</Text>}
+
+      <PrimaryButton title="Submit" onPress={submit} isLoading={isSubmitting} />
     </ScreenContainer>
   )
 }

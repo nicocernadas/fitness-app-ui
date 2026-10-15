@@ -4,7 +4,7 @@ import { Text } from "react-native"
 const Meals = () => {
   return (
     <ScreenContainer hasTabBar>
-      <Text className="font-sans-light">
+      <Text className="font-sans-light text-font-primary">
         This is where the user uploads what he/she ate
       </Text>
     </ScreenContainer>

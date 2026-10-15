@@ -1,6 +1,10 @@
+import type { UserPlan } from "@/model/types/UserPlan"
+
 export type CurrentUser = {
-  id: string
+  id: number
+  name: string | null
   isProfileComplete: boolean
+  plan: UserPlan | null
 }
 
 export type AuthResponse = {

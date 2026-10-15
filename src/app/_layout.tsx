@@ -1,5 +1,7 @@
 import { SessionProvider, useSession } from "@/context/session-provider"
+import { ThemeProvider } from "@/context/theme-provider"
 import "@/global.css"
+import { useRestoreTheme } from "@/hooks/use-theme"
 import { useFonts } from "expo-font"
 import { SplashScreen, Stack } from "expo-router"
 import { useEffect } from "react"
@@ -9,13 +11,16 @@ SplashScreen.preventAutoHideAsync()
 export default function RootLayour() {
   return (
     <SessionProvider>
-      <RootNavigator />
+      <ThemeProvider>
+        <RootNavigator />
+      </ThemeProvider>
     </SessionProvider>
   )
 }
 
 function RootNavigator() {
   const { token, user, isLoading } = useSession()
+  const isThemeRestored = useRestoreTheme()
   const [fontsLoaded] = useFonts({
     "sans-regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
     "sans-bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
@@ -25,7 +30,7 @@ function RootNavigator() {
     "sans-light": require("../../assets/fonts/PlusJakartaSans-Light.ttf"),
   })
 
-  const isReady = fontsLoaded && !isLoading
+  const isReady = fontsLoaded && !isLoading && isThemeRestored
 
   useEffect(() => {
     if (isReady) SplashScreen.hideAsync()
@@ -34,6 +39,8 @@ function RootNavigator() {
   if (!isReady) return null
 
   const isSignedIn = !!token
+  // Onboarding has two steps: personal info, then a goal (the plan)
+  const hasFinishedOnboarding = !!user?.isProfileComplete && !!user?.plan
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
@@ -41,12 +48,13 @@ function RootNavigator() {
         <Stack.Screen name="(auth)" />
       </Stack.Protected>
 
-      <Stack.Protected guard={isSignedIn && !user?.isProfileComplete}>
+      <Stack.Protected guard={isSignedIn && !hasFinishedOnboarding}>
         <Stack.Screen name="(onboarding)" />
       </Stack.Protected>
 
-      <Stack.Protected guard={isSignedIn && (user?.isProfileComplete ?? false)}>
+      <Stack.Protected guard={isSignedIn && hasFinishedOnboarding}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="edit-plan" options={{ presentation: "modal" }} />
       </Stack.Protected>
     </Stack>
   )

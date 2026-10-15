@@ -1,100 +1,66 @@
+import { PrimaryButton } from "@/components/primary-button"
 import RangeProgressBar from "@/components/range-progress-bar"
 import { ScreenContainer } from "@/components/screen-container"
-import { colors } from "@/constants/theme"
-import "@/global.css"
-import { useState } from "react"
-import { Pressable, Text, View } from "react-native"
-import { Calendar } from "react-native-calendars"
+import { DAILY_METRICS } from "@/constants/daily-metrics"
+import { useSession } from "@/context/session-provider"
+import { useCurrentDay } from "@/hooks/use-current-day"
+import { getTargetRange } from "@/utils/get-target-range"
+import { Alert, Text, View } from "react-native"
 
-export default function App() {
-  const [calories, setCalories] = useState(0)
-  const [proteins, setProteins] = useState(0)
-  const [carbs, setCarbs] = useState(0)
-  const [fats, setFats] = useState(0)
+export default function HomeScreen() {
+  const { user } = useSession()
+  const { day, startNewDay, isStartingNewDay, errorMessage } = useCurrentDay()
+  // The (tabs) guard only lets in users with a plan, but the type still allows null
+  const plan = user?.plan
+
+  // Starting a new day can't be undone, so it asks first
+  function confirmStartNewDay() {
+    Alert.alert(
+      "Start a new day?",
+      "Today's totals will be saved, and every counter goes back to 0.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Start new day", onPress: () => startNewDay() },
+      ],
+    )
+  }
 
   return (
     <ScreenContainer hasTabBar>
       <Text className="font-sans-bold text-4xl text-font-secondary">
-        Welcome to
+        Hello,
       </Text>
-      <Text className="font-sans-extrabold text-7xl text-font-primary">
-        Mealer
+      <Text className="font-sans-extrabold text-5xl text-font-primary">
+        {user?.name}
       </Text>
       <Text className="light-text mb-7">What are we eating today?</Text>
 
-      <View className="rounded-2xl">
-        <Calendar
-          theme={{
-            calendarBackground: colors.background,
-          }}
-          onDayPress={(day) => {
-            console.log("selected day", day)
-          }}
-          hideArrows={true}
-          hideExtraDays={true}
-          disableMonthChange={true}
-          disableArrowLeft={true}
-          disableArrowRight={true}
-          renderHeader={(date) => {
-            return (
-              <Text className="extra-light-text text-xs mb-2">
-                Swipe through the days to see your progress
-              </Text>
-            )
-          }}
+      {plan &&
+        DAILY_METRICS.map((metric) => {
+          const { min, max } = getTargetRange(plan[metric.key])
+          return (
+            <View key={metric.key} className="mt-5">
+              <RangeProgressBar
+                label={metric.label}
+                current={day?.[metric.key] ?? 0}
+                min={min}
+                max={max}
+                unit={metric.unit}
+              />
+            </View>
+          )
+        })}
+
+      {errorMessage && (
+        <Text className="mt-5 text-red-600">{errorMessage}</Text>
+      )}
+
+      <View className="mt-10">
+        <PrimaryButton
+          title="Start new day"
+          onPress={confirmStartNewDay}
+          isLoading={isStartingNewDay}
         />
-
-        {/* Get all of these in a for loop */}
-
-        <View className="mt-5">
-          <RangeProgressBar
-            label="Calories"
-            current={calories}
-            min={2000}
-            max={2300}
-            unit="kcal"
-          />
-
-          {/* TEMPORARY: test buttons until adding meals exists */}
-          <View className="mt-3 flex-row gap-3">
-            <Pressable onPress={() => setCalories((prev) => prev + 300)}>
-              <Text className="light-text">+300 kcal</Text>
-            </Pressable>
-            <Pressable onPress={() => setCalories(0)}>
-              <Text className="light-text">Reset</Text>
-            </Pressable>
-          </View>
-        </View>
-
-        <View className="mt-5">
-          <RangeProgressBar
-            label="Proteins"
-            current={proteins}
-            min={80}
-            max={110}
-            unit="g"
-          />
-        </View>
-
-        <View className="mt-5">
-          <RangeProgressBar
-            label="Carbohydrates"
-            current={carbs}
-            min={100}
-            max={150}
-            unit="g"
-          />
-        </View>
-
-        <View className="mt-5">
-          <RangeProgressBar
-            label="Fats"
-            current={fats}
-            min={60}
-            max={90}
-            unit="g"
-          />
-        </View>
       </View>
     </ScreenContainer>
   )

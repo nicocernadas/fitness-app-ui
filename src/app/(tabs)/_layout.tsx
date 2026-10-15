@@ -1,5 +1,6 @@
 import { tabs } from "@/constants/tabs"
-import { colors, components } from "@/constants/theme"
+import { components } from "@/constants/theme"
+import { useTheme } from "@/hooks/use-theme"
 import "@/global.css"
 import clsx from "clsx"
 import { Tabs } from "expo-router"
@@ -10,6 +11,8 @@ const tabBar = components.tabBar
 
 const TabLayout = () => {
   const insets = useSafeAreaInsets()
+  // tabBarStyle is a JS style prop, not a className, so it reads the JS colors
+  const { colors } = useTheme()
   const TabIcon = ({ focused, icon: Icon }: TabIconProps) => {
     return (
       <View className="tabs-icon">
@@ -36,7 +39,7 @@ const TabLayout = () => {
           height: tabBar.height,
           marginHorizontal: tabBar.horizontalInset,
           borderRadius: tabBar.radius,
-          backgroundColor: colors.fontPrimary,
+          backgroundColor: colors.tabBar,
           borderTopWidth: 0,
           elevation: 0,
         },

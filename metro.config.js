@@ -14,4 +14,22 @@ config.resolver = {
   sourceExts: [...config.resolver.sourceExts, "svg"],
 };
 
-module.exports = withNativewind(config);
+module.exports = withNativewind(config, {
+  // By default the CSS compiler replaces each var(--x) with its value at build time.
+  // These change at runtime (ThemeProvider), so they must stay variables.
+  // Keep in sync with themeColors in constants/theme.ts
+  inlineVariables: {
+    exclude: [
+      "--color-background",
+      "--color-font-primary",
+      "--color-font-secondary",
+      "--color-font-terciary",
+      "--color-accent",
+      "--color-border",
+      "--color-tab-bar",
+      "--color-button",
+      "--color-button-text",
+      "--color-input-border",
+    ],
+  },
+});

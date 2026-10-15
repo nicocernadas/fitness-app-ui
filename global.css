@@ -54,17 +54,26 @@
 }
 
 @theme {
-  /* Remember to keep this up-to-date with var(colors) in @theme.ts */
-  --color-background: rgba(250, 240, 230, 0.329);
-  /* --color-background-card: #; */
+  /* Remember to keep this up-to-date with themeColors / colors in constants/theme.ts */
 
+  /* Themed colors (light values). Also in :root below, and excluded from inlining in
+     metro.config.js, because ThemeProvider swaps them at runtime */
+  --color-background: rgba(250, 240, 230, 0.329);
   --color-font-primary: #0f2c33;
   --color-font-secondary: #1b3136;
   --color-font-terciary: #33494e;
-  --color-gray: #868686;
-
   --color-accent: #21616a;
   --color-border: rgba(0, 0, 0, 0.1);
+  --color-tab-bar: #0f2c33;
+  --color-button: #000000;
+  --color-button-text: #ffffff;
+  --color-input-border: #d1d5db;
+
+  /* Same in both themes */
+  --color-gray: #868686;
+  /* Selected option (e.g. the theme buttons in Settings) */
+  --color-selected: #60a5fa;
+  --color-on-selected: #0b2540;
 
   /* Status colors (progress bars) */
   --color-warning: #ffb700;
@@ -102,6 +111,22 @@
   --font-sans-bold: sans-bold;
   /* emphasize */
   --font-sans-extrabold: sans-extrabold;
+}
+
+/* Runtime defaults for the themed colors (the light theme). The NativeWind themes guide asks
+   for each variable in both @theme (to generate the classes) and :root (default value).
+   ThemeProvider overrides them with the active theme through VariableContextProvider */
+:root {
+  --color-background: rgba(250, 240, 230, 0.329);
+  --color-font-primary: #0f2c33;
+  --color-font-secondary: #1b3136;
+  --color-font-terciary: #33494e;
+  --color-accent: #21616a;
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-tab-bar: #0f2c33;
+  --color-button: #000000;
+  --color-button-text: #ffffff;
+  --color-input-border: #d1d5db;
 }
 
 @layer components {

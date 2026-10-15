@@ -10,9 +10,9 @@ export function PrimaryButton({
     <Pressable
       onPress={onPress}
       disabled={isLoading}
-      className="items-center rounded-xl bg-black py-4"
+      className="items-center rounded-xl bg-button py-4"
     >
-      <Text className="font-semibold text-white">
+      <Text className="font-semibold text-button-text">
         {isLoading ? "Loading..." : title}
       </Text>
     </Pressable>

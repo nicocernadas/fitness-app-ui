@@ -1,5 +1,6 @@
+// Values must match the backend's Pace enum
 export enum Pace {
-  SLOW,
-  MODERATE,
-  QUICK,
+  GRADUAL = "Gradual",
+  STEADY = "Steady",
+  FAST = "Fast",
 }

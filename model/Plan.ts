@@ -1,18 +1,33 @@
+import { isEnumValue } from "@/utils/validators"
+import { ValidationError } from "./errors/ValidationError"
 import { Goal } from "./types/Goal"
 import { Pace } from "./types/Pace"
-import { User } from "./User"
+import type { PlanSelection } from "./types/PlanSelection"
 
-//@ A user has 1 plan - which calculates all of the statistics
-class Plan {
-  private id: number
-  private user: User
-  private goal: Goal
-  private pace: Pace
+// The goal + pace sent in onboarding step 2 (PUT /users/plan). The backend calculates
+// the targets from it and returns them as the user's UserPlan.
+// validate() mirrors the backend's Plan.validate()
+export class Plan {
+  goal: Goal
+  pace: Pace | null
 
-  constructor(id: number, user: User, goal: Goal, pace: Pace) {
-    this.id = id
-    this.user = user
+  constructor({ goal, pace }: PlanSelection) {
     this.goal = goal
-    this.pace = pace
+    // Maintaining has no pace
+    this.pace = goal === Goal.MAINTAIN ? null : pace
+  }
+
+  // Throws a ValidationError on the first invalid field
+  validate(): void {
+    if (!isEnumValue(Goal, this.goal)) {
+      throw new ValidationError(
+        `Goal must be one of: ${Object.values(Goal).join(", ")}`,
+      )
+    }
+    if (this.goal !== Goal.MAINTAIN && !isEnumValue(Pace, this.pace)) {
+      throw new ValidationError(
+        `Pace must be one of: ${Object.values(Pace).join(", ")}`,
+      )
+    }
   }
 }
