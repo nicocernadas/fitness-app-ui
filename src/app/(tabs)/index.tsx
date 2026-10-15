@@ -1,5 +1,6 @@
 import RangeProgressBar from "@/components/range-progress-bar"
 import { ScreenContainer } from "@/components/screen-container"
+import { colors } from "@/constants/theme"
 import "@/global.css"
 import { useState } from "react"
 import { Pressable, Text, View } from "react-native"
@@ -24,7 +25,7 @@ export default function App() {
       <View className="rounded-2xl">
         <Calendar
           theme={{
-            calendarBackground: "bg-background",
+            calendarBackground: colors.background,
           }}
           onDayPress={(day) => {
             console.log("selected day", day)

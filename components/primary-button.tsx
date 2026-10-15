@@ -12,7 +12,7 @@ export function PrimaryButton({
       disabled={isLoading}
       className="items-center rounded-xl bg-black py-4"
     >
-      <Text className="font-semibold, text-white">
+      <Text className="font-semibold text-white">
         {isLoading ? "Loading..." : title}
       </Text>
     </Pressable>

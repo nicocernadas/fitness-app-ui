@@ -22,6 +22,7 @@ export default function PersonalInfoScreen() {
   const [activityLevel, setActivityLevel] = useState<ActivityLevel>(
     ActivityLevel.LIGHT,
   )
+  const [name, setName] = useState<string>("")
   const [weight, setWeight] = useState<string>("")
   const [height, setHeight] = useState<string>("")
   const [age, setAge] = useState<string>("")
@@ -36,7 +37,17 @@ export default function PersonalInfoScreen() {
       </Text>
 
       <TextField
+        label="Name"
+        value={name}
+        onChangeText={setName}
+        autoCapitalize="words"
+        textContentType="name"
+        autoComplete="name"
+      />
+
+      <TextField
         label="Weight"
+        inputType="number"
         unit="kgs"
         value={weight}
         onChangeText={setWeight}
