@@ -4,7 +4,6 @@ import { NewDayEntry } from "@/model/NewDayEntry"
 import { formatNutrients } from "@/utils/format-nutrients"
 import { getNutrientsFor } from "@/utils/get-nutrients-for"
 import { parseNumberInput } from "@/utils/parse-number-input"
-import { roundNutrients } from "@/utils/round-nutrients"
 import { useState } from "react"
 import { Pressable, Text, View } from "react-native"
 import { PrimaryButton } from "./primary-button"
@@ -16,7 +15,8 @@ export function EntryGramsForm({ ingredient, onAdded, onChangeIngredient }: Entr
   const { addEntry } = useCurrentDay()
   const [grams, setGrams] = useState<string>("")
   const gramsValue = parseNumberInput(grams)
-  const preview = gramsValue > 0 ? roundNutrients(getNutrientsFor(ingredient, gramsValue)) : null
+  // From the ingredient's unrounded values, like the backend, so it matches what gets saved
+  const preview = gramsValue > 0 ? getNutrientsFor(ingredient, gramsValue) : null
 
   const { submit, errorMessage, isSubmitting } = useFormSubmit(async () => {
     const entry = new NewDayEntry({ ingredientId: ingredient.id, grams: gramsValue })

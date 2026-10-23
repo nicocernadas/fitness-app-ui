@@ -10,4 +10,4 @@ export const MAX_ENTRY_GRAMS = 5000
 export const MAX_INGREDIENT_NAME_LENGTH = 100
 
 // Macros are shown with this many decimals. Calories are always whole numbers
-export const MACRO_DECIMALS = 1
+export const MACRO_DECIMALS = 2
