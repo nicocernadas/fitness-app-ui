@@ -3,30 +3,34 @@ import { formatNutrients } from "@/utils/format-nutrients"
 import { useState } from "react"
 import { Pressable, Text, View } from "react-native"
 import { FormInput } from "./form-input"
+import { PrimaryButton } from "./primary-button"
 import type { IngredientSearchProps } from "./types/IngredientSearch"
 
 // Step 1 of the add-entry modal: find the ingredient, or go create it
 export function IngredientSearch({ onSelect, onCreateNew }: IngredientSearchProps) {
   const [text, setText] = useState<string>("")
-  const { results, isSearching, errorMessage } = useIngredientSearch(text)
-  const hasNoResults = !isSearching && !errorMessage && results.length === 0
+  const { results, search, isSearching, errorMessage } = useIngredientSearch()
+  const hasNoResults = results?.length === 0 && !errorMessage
 
   return (
     <View className="gap-4">
       <Text className="text-2xl font-bold text-font-primary">Add ingredient</Text>
 
       <FormInput
-        placeholder="Search, e.g. boiled rice"
+        placeholder="e.g. boiled rice"
         value={text}
         onChangeText={setText}
         autoCorrect={false}
         autoFocus
+        returnKeyType="search"
+        onSubmitEditing={() => search(text)}
       />
+      <PrimaryButton title="Search" onPress={() => search(text)} isLoading={isSearching} />
 
       {errorMessage && <Text className="text-red-600">{errorMessage}</Text>}
       {hasNoResults && <Text className="light-text">No ingredients found</Text>}
 
-      {results.map((ingredient) => (
+      {results?.map((ingredient) => (
         <Pressable
           key={ingredient.id}
           onPress={() => onSelect(ingredient)}

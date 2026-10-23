@@ -1,45 +1,24 @@
-import { SEARCH_DEBOUNCE_MS } from "@/constants/app-constants"
 import { useSession } from "@/context/session-provider"
 import type { Ingredient } from "@/model/types/Ingredient"
 import { ingredientService } from "@/services/ingredient-service"
-import { getErrorMessage } from "@/utils/get-error-message"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { useFormSubmit } from "./use-form-submit"
 
-// Searches ingredients as the user types, once they stop for SEARCH_DEBOUNCE_MS.
+// Searches only when search(text) is called (the Search button), never while typing.
+// results is null until the first search, so "No ingredients found" only shows after one.
 // An empty text lists the first ingredients alphabetically
-export function useIngredientSearch(text: string) {
+export function useIngredientSearch() {
   const { token } = useSession()
-  const [results, setResults] = useState<Ingredient[]>([])
-  const [isSearching, setIsSearching] = useState<boolean>(true)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [results, setResults] = useState<Ingredient[] | null>(null)
 
-  useEffect(() => {
+  const {
+    submit: search,
+    errorMessage,
+    isSubmitting: isSearching,
+  } = useFormSubmit(async (text: string) => {
     if (!token) return
-    // Set to false when the text changes again, so a slow, older answer never replaces a newer one
-    let isLatestSearch = true
-    setIsSearching(true)
+    setResults(await ingredientService.search(token, text))
+  })
 
-    const timer = setTimeout(() => {
-      ingredientService
-        .search(token, text)
-        .then((ingredients) => {
-          if (!isLatestSearch) return
-          setResults(ingredients)
-          setErrorMessage(null)
-        })
-        .catch((error) => {
-          if (isLatestSearch) setErrorMessage(getErrorMessage(error))
-        })
-        .finally(() => {
-          if (isLatestSearch) setIsSearching(false)
-        })
-    }, SEARCH_DEBOUNCE_MS)
-
-    return () => {
-      isLatestSearch = false
-      clearTimeout(timer)
-    }
-  }, [token, text])
-
-  return { results, isSearching, errorMessage }
+  return { results, search, isSearching, errorMessage }
 }
