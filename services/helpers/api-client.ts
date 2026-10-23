@@ -1,30 +1,32 @@
-import { API_URL } from "@/constants/app-constants"
+import axios, { type AxiosRequestConfig } from "axios"
+import { API_TIMEOUT_MS, API_URL } from "@/constants/app-constants"
 import { ApiError } from "../errors/ApiError"
 import { NetworkError } from "../errors/NetworkError"
+
+// One instance for the whole app. Axios sends `data` as JSON and parses the response JSON by itself
+const apiClient = axios.create({ baseURL: API_URL, timeout: API_TIMEOUT_MS })
 
 //@ Helper
 export async function apiRequest<T>(
   path: string,
-  options: RequestInit = {},
+  config: AxiosRequestConfig = {},
 ): Promise<T> {
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers: { "Content-type": "application/json", ...options.headers },
-    // .catch only runs when the fetch promise rejects, and fetch rejects only when no response comes back at all
-  }).catch(() => {
-    throw new NetworkError()
-  })
+  try {
+    const response = await apiClient.request<T>({ ...config, url: path })
+    return response.data
+  } catch (error) {
+    if (!axios.isAxiosError(error)) throw error
 
-  if (!response.ok) {
-    const body = await response.json().catch(() => null)
+    // Axios rejects on any non-2xx status. No response at all means the server was never reached (or timed out)
+    if (!error.response) throw new NetworkError()
+
+    const body = error.response.data
     const serverMessage =
       typeof body?.message === "string" ? body.message : null
     throw new ApiError(
-      response.status,
+      error.response.status,
       serverMessage,
-      `${options.method ?? "GET"} ${path} failed: ${response.status}`,
+      `${config.method ?? "GET"} ${path} failed: ${error.response.status}`,
     )
   }
-
-  return response.json()
 }

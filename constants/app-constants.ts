@@ -9,6 +9,8 @@ export const SCALE_EXTRA = 0.2
 export const TARGET_RANGE_TOLERANCE = 0.05
 export const API_PORT = 3000
 export const API_URL = `http://192.168.1.25:${API_PORT}`
+// A request that gets no answer within this time fails with the network error message
+export const API_TIMEOUT_MS = 10_000
 export const ERROR_MESSAGES = {
   network: "Couldn't reach the server. Check your connection and try again",
   unexpected: "Something went wrong. Please try again later",

@@ -14,7 +14,7 @@ export const userService = {
     apiRequest<CurrentUser>("/users/onboarding", {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}` },
-      body: JSON.stringify(profile),
+      data: profile,
     }),
 
   // Creates the user's plan, or replaces the current one
@@ -22,6 +22,6 @@ export const userService = {
     apiRequest<CurrentUser>("/users/plan", {
       method: "PUT",
       headers: { Authorization: `Bearer ${token}` },
-      body: JSON.stringify(plan),
+      data: plan,
     }),
 }

@@ -10,12 +10,12 @@ export const authService = {
   login: (credentials: Credentials) =>
     apiRequest<AuthResponse>("/auth/login", {
       method: "POST",
-      body: JSON.stringify(credentials),
+      data: credentials,
     }),
 
   register: (credentials: Credentials) =>
     apiRequest<AuthResponse>("/auth/register", {
       method: "POST",
-      body: JSON.stringify(credentials),
+      data: credentials,
     }),
 }
