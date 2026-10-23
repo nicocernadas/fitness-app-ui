@@ -1,3 +1,4 @@
+import { CurrentDayProvider } from "@/context/current-day-provider"
 import { SessionProvider, useSession } from "@/context/session-provider"
 import { ThemeProvider } from "@/context/theme-provider"
 import "@/global.css"
@@ -12,7 +13,10 @@ export default function RootLayour() {
   return (
     <SessionProvider>
       <ThemeProvider>
-        <RootNavigator />
+        {/* Inside SessionProvider: it needs the token, and only loads once onboarding is done */}
+        <CurrentDayProvider>
+          <RootNavigator />
+        </CurrentDayProvider>
       </ThemeProvider>
     </SessionProvider>
   )
@@ -55,6 +59,7 @@ function RootNavigator() {
       <Stack.Protected guard={isSignedIn && hasFinishedOnboarding}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="edit-plan" options={{ presentation: "modal" }} />
+        <Stack.Screen name="add-entry" options={{ presentation: "modal" }} />
       </Stack.Protected>
     </Stack>
   )

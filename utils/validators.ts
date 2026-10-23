@@ -8,6 +8,14 @@ export function isPositiveNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value) && value > 0
 }
 
+export function isPositiveInteger(value: unknown): value is number {
+  return isPositiveNumber(value) && Number.isInteger(value)
+}
+
+export function isNonNegativeNumber(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0
+}
+
 export function isEnumValue<T extends string>(
   enumObject: Record<string, T>,
   value: unknown,

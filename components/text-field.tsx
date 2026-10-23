@@ -6,6 +6,7 @@ import type { TextFieldProps } from "./types/TextField"
 
 export function TextField({
   label,
+  description,
   inputType = "text",
   unit,
   onChangeText,
@@ -18,7 +19,7 @@ export function TextField({
   }
 
   return (
-    <FormField label={label}>
+    <FormField label={label} description={description}>
       <View className="flex-row items-center gap-3">
         <View className="flex-1">
           <FormInput

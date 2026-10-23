@@ -2,14 +2,21 @@ import { PrimaryButton } from "@/components/primary-button"
 import RangeProgressBar from "@/components/range-progress-bar"
 import { ScreenContainer } from "@/components/screen-container"
 import { DAILY_METRICS } from "@/constants/daily-metrics"
+import { useCurrentDay } from "@/context/current-day-provider"
 import { useSession } from "@/context/session-provider"
-import { useCurrentDay } from "@/hooks/use-current-day"
+import { useFormSubmit } from "@/hooks/use-form-submit"
 import { getTargetRange } from "@/utils/get-target-range"
 import { Alert, Text, View } from "react-native"
 
 export default function HomeScreen() {
   const { user } = useSession()
-  const { day, startNewDay, isStartingNewDay, errorMessage } = useCurrentDay()
+  const { day, loadError, startNewDay } = useCurrentDay()
+  const {
+    submit: submitStartNewDay,
+    errorMessage: startError,
+    isSubmitting: isStartingNewDay,
+  } = useFormSubmit(startNewDay)
+  const errorMessage = startError ?? loadError
   // The (tabs) guard only lets in users with a plan, but the type still allows null
   const plan = user?.plan
 
@@ -20,7 +27,7 @@ export default function HomeScreen() {
       "Today's totals will be saved, and every counter goes back to 0.",
       [
         { text: "Cancel", style: "cancel" },
-        { text: "Start new day", onPress: () => startNewDay() },
+        { text: "Start new day", onPress: () => submitStartNewDay() },
       ],
     )
   }

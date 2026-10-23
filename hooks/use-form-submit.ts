@@ -3,15 +3,18 @@ import { useState } from "react"
 
 // Runs a form's async action and tracks its loading and error state,
 // so every screen doesn't repeat the same try/catch/finally.
-export function useFormSubmit(action: () => Promise<void>) {
+// submit() passes its arguments on to the action, e.g. the id of the entry to delete
+export function useFormSubmit<Args extends unknown[]>(
+  action: (...args: Args) => Promise<void>,
+) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
-  async function submit() {
+  async function submit(...args: Args) {
     setErrorMessage(null)
     setIsSubmitting(true)
     try {
-      await action()
+      await action(...args)
     } catch (error) {
       setErrorMessage(getErrorMessage(error))
     } finally {

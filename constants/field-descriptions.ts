@@ -46,3 +46,6 @@ export const PACE_OPTION_DESCRIPTIONS: Record<PacedGoal, Record<Pace, string>> =
     [Pace.FAST]: "The quickest results, but harder to sustain",
   },
 }
+
+export const INGREDIENT_NAME_DESCRIPTION =
+  'Be specific: "beans" (dry) isn\'t the same as "boiled beans" (already cooked).'
